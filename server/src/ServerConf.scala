@@ -1,5 +1,4 @@
-package jp.kenichi.pk1
-package server
+package jp.kenichi.pk1.server
 
 import com.typesafe.config.{ConfigFactory, ConfigException}
 import io.circe.Decoder

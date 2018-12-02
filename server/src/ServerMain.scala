@@ -1,5 +1,4 @@
-package jp.kenichi.pk1
-package server
+package jp.kenichi.pk1.server
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.sys.ShutdownHookThread

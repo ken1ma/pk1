@@ -1,5 +1,4 @@
-package jp.kenichi.pk1
-package server
+package jp.kenichi.pk1.server
 
 import org.http4s._
 import org.http4s.dsl.io._

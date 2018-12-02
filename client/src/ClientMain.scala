@@ -1,5 +1,4 @@
-package jp.kenichi.pk1
-package client
+package jp.kenichi.pk1.client
 
 import scala.scalajs.js
 
