@@ -2,6 +2,7 @@ package jp.kenichi.pk1.server
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.sys.ShutdownHookThread
+import java.lang.management.ManagementFactory
 import java.net.URLDecoder
 
 import org.http4s._
@@ -21,8 +22,8 @@ import org.log4s.{getLogger, Logger, MDC}
 
 object ServerMain extends StreamApp[IO] with ServerHelper {
 	val log = getLogger
-	log.info(s"startup") // TODO add pid on Java 11
-	ShutdownHookThread(log.info("shutdown")) // find out when the process dies unexpectedly
+	log.info(s"startup ($pid)")
+	ShutdownHookThread(log.info(s"shutdown ($pid)")) // find out when the process dies unexpectedly
 	logRuntimeInfo
 	logRuntimeState
 
@@ -128,7 +129,7 @@ object UrlDecodePathInfo {
 trait ServerHelper {
 	def log: Logger
 
-//	val pid = ManagementFactory.getRuntimeMXBean.getPid
+	val pid = ManagementFactory.getRuntimeMXBean.getPid
 
 	import scala.util.Properties
 
