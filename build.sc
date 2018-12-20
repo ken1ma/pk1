@@ -1,7 +1,7 @@
 import mill._, scalalib._, scalajslib._
 
 trait CommonScalaModule extends ScalaModule {
-	def scalaVersion = "2.12.7"
+	def scalaVersion = "2.12.7" // 2.12.8 has been released but mill repl fails to resolve com.lihaoyi:ammonite_2.12.8:1.4.4
 	def scalacOptions = Seq(
 		"-Ypartial-unification", // for http4s
 		"-deprecation",

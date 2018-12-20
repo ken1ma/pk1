@@ -1,17 +1,17 @@
 # Server Environment
 
 1. Java 11.0.1
-	1. Either OpenJDK or Oracle JRE
+	1. Either OpenJDK or Oracle JDK
 
 
 # Client Environment
 
-1. Chrome for now
+1. Latest Chrome/Firefox/Safari/Edge
 
 
 # Development Environment
 
-1. Java 1.8.0_191
+In addition to the server environment above
 1. [mill](http://www.lihaoyi.com/mill/) 0.3.5
 
 
@@ -23,7 +23,7 @@
 
 	1. `tail -F log/server-debug.log` to see the debug log
 
-1. Generate JavaScript fast
+2. Generate JavaScript fast
 
 		mill client.fastOpt
 
@@ -32,10 +32,14 @@
 
 # Infrequently Used Development Commands
 
-1. Build the assembly jar `out/server/assembly/dest/out.jar` that contains both the server and the client
+1. Start REPL
+
+		mill -i server.repl
+
+2. Build the assembly jar `out/server/assembly/dest/out.jar` that contains both the server and the client
 
 		mill server.assembly
 
-2. Show the dependencies
+3. Show the dependencies
 
 		mill _.ivyDepsTree
