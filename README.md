@@ -29,6 +29,10 @@ In addition to the server environment above
 
 	1. Open `https://localhost:8443/` to test
 
+3. Build the assembly jar `out/server/assembly/dest/out.jar` that contains both the server and the client
+
+		mill server.assembly
+
 
 # Infrequently Used Development Commands
 
@@ -36,10 +40,6 @@ In addition to the server environment above
 
 		mill -i server.repl
 
-2. Build the assembly jar `out/server/assembly/dest/out.jar` that contains both the server and the client
-
-		mill server.assembly
-
-3. Show the dependencies
+2. Show the dependencies
 
 		mill _.ivyDepsTree
