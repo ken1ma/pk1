@@ -13,6 +13,7 @@
 
 In addition to the server environment above
 1. [mill](http://www.lihaoyi.com/mill/) 0.3.5
+	1. On macOS X where both Java 11 and 8 are installed, JAVA_HOME must be set for Java 11, PATH must contain $JAVA_HOME/bin, and existing mill processes must be killed if they have been spawned with Java 8
 
 
 # Frequently Used Development Commands
