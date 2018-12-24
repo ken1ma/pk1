@@ -29,9 +29,9 @@ In addition to the server environment above
 
 	1. Open `https://localhost:8443/` to test
 
-3. Build the assembly jar `out/server/assembly/dest/out.jar` that contains both the server and the client
+3. Build the jar containining both the server and the client
 
-		mill server.assembly
+		mill dist.jar
 
 
 # Infrequently Used Development Commands

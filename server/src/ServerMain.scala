@@ -35,7 +35,7 @@ object ServerMain extends StreamApp[IO] with ServerHelper {
 		// serve index.html for whatever path set by history.pushState
 		// except those that contain '.' in the last path component (e.g. favicon.ico, robots.txt)
 		case req @ GET -> _ if (!req.uri.path.split('/').lastOption.exists(_.contains('.'))) =>
-			StaticFile.fromResource("/web/index.html", Some(req), preferGzipped = true)
+			StaticFile.fromResource("/web/index.html", Some(req), preferGzipped = true) // gzip can be safely enabled since exploiting BREACH vulnerability requires both sensitive data and user-controlled data in the same response 
 					.getOrElseF(NotFound())
 	}
 

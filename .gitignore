@@ -1,4 +1,5 @@
 log/
+dist/
 
 # mill
 out/

@@ -23,8 +23,67 @@ object server extends CommonScalaModule {
 	// serve the output of client.fastOpt
 	def forkEnv = Map(
 		"DOC_MAPPINGS" -> "/pk1.js -> /out.js",
-		"DOC_ROOTS" -> "out/client/fastOpt/dest, client/resources",
+		"DOC_ROOTS" -> "out/client/fastOpt/dest, client/resources/web",
 	)
+}
+
+object dist extends Module {
+	def jar = T {
+		val jsName = "pk1.js"
+		val outFile = os.pwd / "dist" / "pk1.jar"
+		os.makeDir.all(outFile / os.up)
+
+		import scala.collection.JavaConverters._
+		import java.io.FileOutputStream
+		import java.util.jar.{JarOutputStream, JarEntry, JarFile}
+		val out = new JarOutputStream(new FileOutputStream(outFile.toIO))
+
+		try {
+			// server jar
+			val serverJar = new JarFile(server.assembly().path.toIO)
+			try {
+				val buf = new Array[Byte](8192)
+				for (entry <- serverJar.entries.asScala) {
+					out.putNextEntry(entry)
+					val in = serverJar.getInputStream(entry)
+					try {
+						Iterator.continually(in.read(buf)).takeWhile(_ != -1).foreach(len => out.write(buf, 0, len))
+					} finally {
+						in.close
+					}
+				}
+			} finally {
+				serverJar.close
+			}
+
+			// client js
+			def add(name: String, file: os.Path) {
+				if (os.isDir(file)) {
+					for (child <- os.list.stream(file))
+						if (!child.last.startsWith(".")) {
+							add(s"$name/${child.last}", child)
+						}
+				} else {
+					val entry = new JarEntry(name)
+					entry.setTime(os.mtime(file))
+					out.putNextEntry(entry)
+					out.write(os.read.bytes(file))
+				}
+			}
+			add(s"web/$jsName", client.fullOpt().path)
+
+			// client html
+			for (resource <- client.resources())
+				for (child <- os.list.stream(resource.path))
+					if (child.last == "web")
+						add("web", child)
+
+		} finally {
+			out.close
+		}
+
+		outFile
+	}
 }
 
 object client extends ScalaJSModule with CommonScalaModule {
